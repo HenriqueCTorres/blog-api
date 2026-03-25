@@ -17,5 +17,6 @@ public class Tag {
 
     private @Getter @Setter String name;
 
+    @ManyToMany()
     private @Getter @Setter Set<Post> posts;
 }
