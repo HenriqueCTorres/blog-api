@@ -17,37 +17,36 @@ public class DataLoader {
     @Bean
     CommandLineRunner initData(ProfileRepository profileRepository, UserRepository userRepository){
         return args -> {
-            if (userRepository.count() == 0) {
-                User admin = User.builder()
-                        .email("admin@gmailcom")
-                        .name("TIO FULADO")
-                        .password("123456789DEIZ")
-                        .build();
 
-                User zemane = User.builder()
-                        .email("zemane@gmailcom")
-                        .name("ZE MANE")
-                        .password("123456789DEIZDINOVO")
-                        .build();
+            User admin = User.builder()
+                    .email("admin@gmailcom")
+                    .name("TIO FULADO")
+                    .password("123456789DEIZ")
+                    .build();
 
-                userRepository.save(admin);
-                userRepository.save(zemane);
+            User zemane = User.builder()
+                    .email("zemane@gmailcom")
+                    .name("ZE MANE")
+                    .password("123456789DEIZDINOVO")
+                    .build();
 
-                Collection<Profile> profiles = new LinkedList<>();
-                profiles.add(Profile.builder()
-                        .bio("Some Bio")
-                        .imagePath("some image path")
-                        .user(admin)
-                        .build());
+            userRepository.save(admin);
+            userRepository.save(zemane);
 
-                profiles.add(Profile.builder()
-                        .bio("Some Bio2")
-                        .imagePath("some image path2")
-                        .user(zemane)
-                        .build());
+            Collection<Profile> profiles = new LinkedList<>();
+            profiles.add( Profile.builder()
+                    .bio("Some Bio")
+                    .imagePath("some image path")
+                    .user( admin )
+                    .build());
 
-                profileRepository.saveAll(profiles);
-            }
+            profiles.add( Profile.builder()
+                    .bio("Some Bio2")
+                    .imagePath("some image path2")
+                    .user( zemane)
+                    .build());
+
+            profileRepository.saveAll(profiles);
         };
     }
 }

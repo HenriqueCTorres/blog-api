@@ -25,18 +25,18 @@ public class BackendApplication {
 
 		Collection<User> users = new LinkedList<>();
 
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
 //		users.add( new Post());
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
-		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
+		users.add(new User(UUID.randomUUID(), "sample name", "sample_e mail", "S3kr3t", null, null));
 
 		for( User user : users){
 			System.out.println(user);

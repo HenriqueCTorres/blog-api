@@ -1,0 +1,878 @@
+2026-04-13T12:30:32.342-03:00  INFO 4276 --- [blog] [main] b.c.f.j.b.b.BackendApplicationTests      : Starting BackendApplicationTests using Java 24.0.2 with PID 4276 (started by henri in C:\Users\henri\OneDrive\Área de Trabalho\blog-api)
+2026-04-13T12:30:32.345-03:00  INFO 4276 --- [blog] [main] b.c.f.j.b.b.BackendApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2026-04-13T12:30:34.221-03:00  INFO 4276 --- [blog] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-13T12:30:34.413-03:00  INFO 4276 --- [blog] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 155 ms. Found 7 JPA repository interfaces.
+2026-04-13T12:30:35.399-03:00  INFO 4276 --- [blog] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-13T12:30:35.541-03:00  INFO 4276 --- [blog] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-13T12:30:36.577-03:00  INFO 4276 --- [blog] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-13T12:30:36.632-03:00  INFO 4276 --- [blog] [main] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Starting...
+2026-04-13T12:30:37.082-03:00  INFO 4276 --- [blog] [main] com.zaxxer.hikari.pool.HikariPool        : blogHikariConnectionPool - Added connection conn0: url=jdbc:h2:mem:blogdb user=SA
+2026-04-13T12:30:37.084-03:00  INFO 4276 --- [blog] [main] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Start completed.
+2026-04-13T12:30:37.172-03:00  INFO 4276 --- [blog] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:blogdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: BLOGDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-13T12:30:38.790-03:00  INFO 4276 --- [blog] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-13T12:30:38.796-03:00  INFO 4276 --- [blog] [main] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 20)
+2026-04-13T12:30:38.826-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists order_items cascade 
+2026-04-13T12:30:38.828-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2026-04-13T12:30:38.829-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists posts cascade 
+2026-04-13T12:30:38.829-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists posts_tags cascade 
+2026-04-13T12:30:38.829-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists profile cascade 
+2026-04-13T12:30:38.830-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists roles cascade 
+2026-04-13T12:30:38.830-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists roles_users cascade 
+2026-04-13T12:30:38.830-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists system_local_fucking_users cascade 
+2026-04-13T12:30:38.831-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists tags cascade 
+2026-04-13T12:30:38.831-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    drop table if exists users_roles cascade 
+2026-04-13T12:30:38.841-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table order_items (
+        price float(53),
+        quantity float(53),
+        tax_value float(53),
+        item_id bigint not null,
+        order_id bigint not null,
+        user_id uuid,
+        item varchar(255),
+        primary key (item_id, order_id)
+    )
+2026-04-13T12:30:38.852-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table orders (
+        total_price float(53),
+        total_quantity float(53),
+        total_tax float(53),
+        order_id bigint not null,
+        user_id uuid not null,
+        primary key (order_id, user_id)
+    )
+2026-04-13T12:30:38.854-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table posts (
+        id uuid not null,
+        user_id uuid,
+        title varchar(60) not null,
+        content varchar(255) not null,
+        primary key (id)
+    )
+2026-04-13T12:30:38.855-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table posts_tags (
+        post_id uuid not null,
+        tag_id uuid not null,
+        primary key (post_id, tag_id)
+    )
+2026-04-13T12:30:38.858-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table profile (
+        id uuid not null,
+        user_id uuid unique,
+        bio varchar(255),
+        profile_image_url varchar(255),
+        primary key (id)
+    )
+2026-04-13T12:30:38.860-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table roles (
+        name varchar(15) unique,
+        id uuid not null,
+        primary key (id)
+    )
+2026-04-13T12:30:38.862-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table roles_users (
+        role_id uuid not null,
+        users_id uuid not null,
+        primary key (role_id, users_id)
+    )
+2026-04-13T12:30:38.864-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table system_local_fucking_users (
+        id uuid not null,
+        password varchar(20) not null,
+        email varchar(100) not null,
+        name varchar(100) not null,
+        primary key (id)
+    )
+2026-04-13T12:30:38.866-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table tags (
+        name varchar(15),
+        id uuid not null,
+        primary key (id)
+    )
+2026-04-13T12:30:38.867-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    create table users_roles (
+        role_id uuid not null,
+        user_id uuid not null,
+        primary key (role_id, user_id)
+    )
+2026-04-13T12:30:38.868-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists order_items 
+       add constraint FK2b94xo5ioyg2v8o045ndlatrt 
+       foreign key (order_id, user_id) 
+       references orders
+2026-04-13T12:30:38.888-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists orders 
+       add constraint FKiekvuv2otsk2enahpb38qf9xn 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:30:38.890-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists posts 
+       add constraint FKnujw3hsbjyk16e9l8g65tu6ag 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:30:38.891-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists posts_tags 
+       add constraint FK4svsmj4juqu2l8yaw6whr1v4v 
+       foreign key (tag_id) 
+       references tags
+2026-04-13T12:30:38.893-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists posts_tags 
+       add constraint FKcreclgob71ibo58gsm6l5wp6 
+       foreign key (post_id) 
+       references posts
+2026-04-13T12:30:38.895-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists profile 
+       add constraint FK6do55a471tt25qo5586mh2e90 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:30:38.896-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists roles_users 
+       add constraint FK9gk3kffj4seg78vxrn1h1cytb 
+       foreign key (users_id) 
+       references system_local_fucking_users
+2026-04-13T12:30:38.898-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists roles_users 
+       add constraint FKsmos02hm32191ogexm2ljik9x 
+       foreign key (role_id) 
+       references roles
+2026-04-13T12:30:38.899-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists users_roles 
+       add constraint FKj6m8fwv7oqv74fcehir1a9ffy 
+       foreign key (role_id) 
+       references roles
+2026-04-13T12:30:38.901-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    alter table if exists users_roles 
+       add constraint FKr34i0at22tsu3klgjvl8qxpms 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:30:38.905-03:00  INFO 4276 --- [blog] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-13T12:30:39.154-03:00  INFO 4276 --- [blog] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-13T12:30:39.535-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.update' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.542-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.create' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.543-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.delete' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.543-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.delete' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.544-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.partialUpdate' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.544-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.545-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.findByUser' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.545-03:00 TRACE 4276 --- [blog] [main] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchById' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:30:39.726-03:00  WARN 4276 --- [blog] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-13T12:30:41.788-03:00  INFO 4276 --- [blog] [main] o.s.b.h.a.H2ConsoleAutoConfiguration     : H2 console available at '/console'. Database available at 'jdbc:h2:mem:blogdb'
+2026-04-13T12:30:41.962-03:00  INFO 4276 --- [blog] [main] b.c.f.j.b.b.BackendApplicationTests      : Started BackendApplicationTests in 10.431 seconds (process running for 12.798)
+2026-04-13T12:30:41.989-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.count]
+2026-04-13T12:30:42.132-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        system_local_fucking_users u1_0
+2026-04-13T12:30:42.194-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.count]
+2026-04-13T12:30:42.204-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:30:42.273-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:30:42.373-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        system_local_fucking_users
+        (email, name, password, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:30:42.394-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:30:42.395-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:30:42.397-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        system_local_fucking_users
+        (email, name, password, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:30:42.399-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll]
+2026-04-13T12:30:42.401-03:00 TRACE 4276 --- [blog] [main] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll]
+2026-04-13T12:30:42.402-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        profile
+        (bio, profile_image_url, user_id, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:30:42.403-03:00 DEBUG 4276 --- [blog] [main] org.hibernate.SQL                        : 
+    insert 
+    into
+        profile
+        (bio, profile_image_url, user_id, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:30:43.116-03:00  INFO 4276 --- [blog] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-13T12:30:43.120-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists order_items cascade 
+2026-04-13T12:30:43.122-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2026-04-13T12:30:43.123-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists posts cascade 
+2026-04-13T12:30:43.125-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists posts_tags cascade 
+2026-04-13T12:30:43.126-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists profile cascade 
+2026-04-13T12:30:43.127-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists roles cascade 
+2026-04-13T12:30:43.129-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists roles_users cascade 
+2026-04-13T12:30:43.130-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists system_local_fucking_users cascade 
+2026-04-13T12:30:43.131-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists tags cascade 
+2026-04-13T12:30:43.132-03:00 DEBUG 4276 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists users_roles cascade 
+2026-04-13T12:30:43.142-03:00  INFO 4276 --- [blog] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Shutdown initiated...
+2026-04-13T12:30:43.148-03:00  INFO 4276 --- [blog] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Shutdown completed.
+2026-04-13T12:31:02.124-03:00  INFO 2964 --- [blog] [restartedMain] b.c.f.j.blog.backend.BackendApplication  : Starting BackendApplication using Java 24.0.2 with PID 2964 (C:\Users\henri\OneDrive\Área de Trabalho\blog-api\target\classes started by henri in C:\Users\henri\OneDrive\Área de Trabalho\blog-api)
+2026-04-13T12:31:02.129-03:00  INFO 2964 --- [blog] [restartedMain] b.c.f.j.blog.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-13T12:31:02.230-03:00  INFO 2964 --- [blog] [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\henri\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.9.0.25.07\ojdbc11-23.9.0.25.07.jar referenced one or more files that do not exist: file:/C:/Users/henri/.m2/repository/com/oracle/database/jdbc/ojdbc11/23.9.0.25.07/oraclepki.jar
+2026-04-13T12:31:02.231-03:00  INFO 2964 --- [blog] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-13T12:31:02.231-03:00  INFO 2964 --- [blog] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-13T12:31:03.201-03:00  INFO 2964 --- [blog] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-13T12:31:03.286-03:00  INFO 2964 --- [blog] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 7 JPA repository interfaces.
+2026-04-13T12:31:04.070-03:00  INFO 2964 --- [blog] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-04-13T12:31:04.085-03:00  INFO 2964 --- [blog] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-13T12:31:04.085-03:00  INFO 2964 --- [blog] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-04-13T12:31:04.149-03:00  INFO 2964 --- [blog] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1917 ms
+2026-04-13T12:31:04.376-03:00  INFO 2964 --- [blog] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-13T12:31:04.462-03:00  INFO 2964 --- [blog] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-13T12:31:05.076-03:00  INFO 2964 --- [blog] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-13T12:31:05.122-03:00  INFO 2964 --- [blog] [restartedMain] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Starting...
+2026-04-13T12:31:05.461-03:00  INFO 2964 --- [blog] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : blogHikariConnectionPool - Added connection conn0: url=jdbc:h2:mem:blogdb user=SA
+2026-04-13T12:31:05.462-03:00  INFO 2964 --- [blog] [restartedMain] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Start completed.
+2026-04-13T12:31:05.527-03:00  INFO 2964 --- [blog] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:blogdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: BLOGDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-13T12:31:06.972-03:00  INFO 2964 --- [blog] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-13T12:31:06.975-03:00  INFO 2964 --- [blog] [restartedMain] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 20)
+2026-04-13T12:31:06.993-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists order_items cascade 
+2026-04-13T12:31:06.994-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2026-04-13T12:31:06.996-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists posts cascade 
+2026-04-13T12:31:06.996-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists posts_tags cascade 
+2026-04-13T12:31:06.996-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists profile cascade 
+2026-04-13T12:31:06.996-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists roles cascade 
+2026-04-13T12:31:06.996-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists roles_users cascade 
+2026-04-13T12:31:06.997-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists system_local_fucking_users cascade 
+2026-04-13T12:31:06.997-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists tags cascade 
+2026-04-13T12:31:06.997-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists users_roles cascade 
+2026-04-13T12:31:07.003-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table order_items (
+        price float(53),
+        quantity float(53),
+        tax_value float(53),
+        item_id bigint not null,
+        order_id bigint not null,
+        user_id uuid,
+        item varchar(255),
+        primary key (item_id, order_id)
+    )
+2026-04-13T12:31:07.011-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table orders (
+        total_price float(53),
+        total_quantity float(53),
+        total_tax float(53),
+        order_id bigint not null,
+        user_id uuid not null,
+        primary key (order_id, user_id)
+    )
+2026-04-13T12:31:07.012-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table posts (
+        id uuid not null,
+        user_id uuid,
+        title varchar(60) not null,
+        content varchar(255) not null,
+        primary key (id)
+    )
+2026-04-13T12:31:07.013-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table posts_tags (
+        post_id uuid not null,
+        tag_id uuid not null,
+        primary key (post_id, tag_id)
+    )
+2026-04-13T12:31:07.014-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table profile (
+        id uuid not null,
+        user_id uuid unique,
+        bio varchar(255),
+        profile_image_url varchar(255),
+        primary key (id)
+    )
+2026-04-13T12:31:07.016-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table roles (
+        name varchar(15) unique,
+        id uuid not null,
+        primary key (id)
+    )
+2026-04-13T12:31:07.017-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table roles_users (
+        role_id uuid not null,
+        users_id uuid not null,
+        primary key (role_id, users_id)
+    )
+2026-04-13T12:31:07.019-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table system_local_fucking_users (
+        id uuid not null,
+        password varchar(20) not null,
+        email varchar(100) not null,
+        name varchar(100) not null,
+        primary key (id)
+    )
+2026-04-13T12:31:07.020-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table tags (
+        name varchar(15),
+        id uuid not null,
+        primary key (id)
+    )
+2026-04-13T12:31:07.021-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table users_roles (
+        role_id uuid not null,
+        user_id uuid not null,
+        primary key (role_id, user_id)
+    )
+2026-04-13T12:31:07.021-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists order_items 
+       add constraint FK2b94xo5ioyg2v8o045ndlatrt 
+       foreign key (order_id, user_id) 
+       references orders
+2026-04-13T12:31:07.034-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists orders 
+       add constraint FKiekvuv2otsk2enahpb38qf9xn 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:31:07.036-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists posts 
+       add constraint FKnujw3hsbjyk16e9l8g65tu6ag 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:31:07.037-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists posts_tags 
+       add constraint FK4svsmj4juqu2l8yaw6whr1v4v 
+       foreign key (tag_id) 
+       references tags
+2026-04-13T12:31:07.042-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists posts_tags 
+       add constraint FKcreclgob71ibo58gsm6l5wp6 
+       foreign key (post_id) 
+       references posts
+2026-04-13T12:31:07.043-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists profile 
+       add constraint FK6do55a471tt25qo5586mh2e90 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:31:07.044-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists roles_users 
+       add constraint FK9gk3kffj4seg78vxrn1h1cytb 
+       foreign key (users_id) 
+       references system_local_fucking_users
+2026-04-13T12:31:07.045-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists roles_users 
+       add constraint FKsmos02hm32191ogexm2ljik9x 
+       foreign key (role_id) 
+       references roles
+2026-04-13T12:31:07.046-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists users_roles 
+       add constraint FKj6m8fwv7oqv74fcehir1a9ffy 
+       foreign key (role_id) 
+       references roles
+2026-04-13T12:31:07.047-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists users_roles 
+       add constraint FKr34i0at22tsu3klgjvl8qxpms 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:31:07.051-03:00  INFO 2964 --- [blog] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-13T12:31:07.164-03:00  INFO 2964 --- [blog] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-13T12:31:07.375-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.update' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.378-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.create' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.379-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.delete' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.379-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.delete' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.379-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.partialUpdate' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.379-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchById' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.379-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.379-03:00 TRACE 2964 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.findByUser' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:31:07.432-03:00  WARN 2964 --- [blog] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-13T12:31:08.456-03:00  INFO 2964 --- [blog] [restartedMain] o.s.b.h.a.H2ConsoleAutoConfiguration     : H2 console available at '/console'. Database available at 'jdbc:h2:mem:blogdb'
+2026-04-13T12:31:08.548-03:00  INFO 2964 --- [blog] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-13T12:31:08.549-03:00  INFO 2964 --- [blog] [restartedMain] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-13T12:31:08.552-03:00  INFO 2964 --- [blog] [restartedMain] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-13T12:31:08.553-03:00  INFO 2964 --- [blog] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-04-13T12:31:08.560-03:00  INFO 2964 --- [blog] [restartedMain] b.c.f.j.blog.backend.BackendApplication  : Started BackendApplication in 7.276 seconds (process running for 8.268)
+2026-04-13T12:31:08.578-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.count]
+2026-04-13T12:31:08.643-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        system_local_fucking_users u1_0
+2026-04-13T12:31:08.672-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.count]
+2026-04-13T12:31:08.676-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:31:08.703-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:31:08.754-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        system_local_fucking_users
+        (email, name, password, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:31:08.771-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:31:08.771-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:31:08.773-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        system_local_fucking_users
+        (email, name, password, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:31:08.774-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll]
+2026-04-13T12:31:08.776-03:00 TRACE 2964 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll]
+2026-04-13T12:31:08.777-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        profile
+        (bio, profile_image_url, user_id, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:31:08.777-03:00 DEBUG 2964 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        profile
+        (bio, profile_image_url, user_id, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:31:24.076-03:00 TRACE 2964 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Getting transaction for [br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll]
+2026-04-13T12:31:24.077-03:00 TRACE 2964 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]
+2026-04-13T12:31:24.093-03:00 DEBUG 2964 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.bio,
+        p1_0.profile_image_url,
+        p1_0.user_id 
+    from
+        profile p1_0
+2026-04-13T12:31:24.108-03:00 DEBUG 2964 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        p1_0.id,
+        p1_0.bio,
+        p1_0.profile_image_url 
+    from
+        system_local_fucking_users u1_0 
+    left join
+        profile p1_0 
+            on u1_0.id=p1_0.user_id 
+    where
+        u1_0.id=?
+2026-04-13T12:31:24.117-03:00 DEBUG 2964 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        p1_0.id,
+        p1_0.bio,
+        p1_0.profile_image_url 
+    from
+        system_local_fucking_users u1_0 
+    left join
+        profile p1_0 
+            on u1_0.id=p1_0.user_id 
+    where
+        u1_0.id=?
+2026-04-13T12:31:24.118-03:00 TRACE 2964 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]
+2026-04-13T12:31:24.119-03:00 TRACE 2964 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Completing transaction for [br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll]
+2026-04-13T12:31:24.221-03:00  WARN 2964 --- [blog] [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-13T12:31:24.222-03:00  WARN 2964 --- [blog] [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-13T12:37:55.437-03:00  INFO 2964 --- [blog] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-13T12:37:55.442-03:00  INFO 2964 --- [blog] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-13T12:37:55.445-03:00  INFO 2964 --- [blog] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-13T12:37:55.446-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists order_items cascade 
+2026-04-13T12:37:55.448-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2026-04-13T12:37:55.448-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists posts cascade 
+2026-04-13T12:37:55.449-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists posts_tags cascade 
+2026-04-13T12:37:55.449-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists profile cascade 
+2026-04-13T12:37:55.450-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists roles cascade 
+2026-04-13T12:37:55.451-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists roles_users cascade 
+2026-04-13T12:37:55.451-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists system_local_fucking_users cascade 
+2026-04-13T12:37:55.452-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists tags cascade 
+2026-04-13T12:37:55.452-03:00 DEBUG 2964 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists users_roles cascade 
+2026-04-13T12:37:55.458-03:00  WARN 2964 --- [blog] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-240]
+2026-04-13T12:37:55.459-03:00  INFO 2964 --- [blog] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Shutdown initiated...
+2026-04-13T12:37:55.460-03:00  INFO 2964 --- [blog] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Shutdown completed.
+2026-04-13T12:46:52.411-03:00  INFO 19732 --- [blog] [restartedMain] b.c.f.j.blog.backend.BackendApplication  : Starting BackendApplication using Java 24.0.2 with PID 19732 (C:\Users\henri\OneDrive\Área de Trabalho\blog-api\target\classes started by henri in C:\Users\henri\OneDrive\Área de Trabalho\blog-api)
+2026-04-13T12:46:52.416-03:00  INFO 19732 --- [blog] [restartedMain] b.c.f.j.blog.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-13T12:46:52.506-03:00  INFO 19732 --- [blog] [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\henri\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.9.0.25.07\ojdbc11-23.9.0.25.07.jar referenced one or more files that do not exist: file:/C:/Users/henri/.m2/repository/com/oracle/database/jdbc/ojdbc11/23.9.0.25.07/oraclepki.jar
+2026-04-13T12:46:52.506-03:00  INFO 19732 --- [blog] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-13T12:46:52.506-03:00  INFO 19732 --- [blog] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-13T12:46:53.516-03:00  INFO 19732 --- [blog] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-13T12:46:53.617-03:00  INFO 19732 --- [blog] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 88 ms. Found 7 JPA repository interfaces.
+2026-04-13T12:46:54.356-03:00  INFO 19732 --- [blog] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-04-13T12:46:54.373-03:00  INFO 19732 --- [blog] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-13T12:46:54.374-03:00  INFO 19732 --- [blog] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-04-13T12:46:54.428-03:00  INFO 19732 --- [blog] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1920 ms
+2026-04-13T12:46:54.664-03:00  INFO 19732 --- [blog] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-13T12:46:54.789-03:00  INFO 19732 --- [blog] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-13T12:46:55.322-03:00  INFO 19732 --- [blog] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-13T12:46:55.355-03:00  INFO 19732 --- [blog] [restartedMain] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Starting...
+2026-04-13T12:46:55.661-03:00  INFO 19732 --- [blog] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : blogHikariConnectionPool - Added connection conn0: url=jdbc:h2:mem:blogdb user=SA
+2026-04-13T12:46:55.663-03:00  INFO 19732 --- [blog] [restartedMain] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Start completed.
+2026-04-13T12:46:55.724-03:00  INFO 19732 --- [blog] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:blogdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: BLOGDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-13T12:46:56.900-03:00  INFO 19732 --- [blog] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-13T12:46:56.906-03:00  INFO 19732 --- [blog] [restartedMain] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 20)
+2026-04-13T12:46:56.931-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists order_items cascade 
+2026-04-13T12:46:56.933-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2026-04-13T12:46:56.934-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists posts cascade 
+2026-04-13T12:46:56.934-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists posts_tags cascade 
+2026-04-13T12:46:56.934-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists profile cascade 
+2026-04-13T12:46:56.934-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists roles cascade 
+2026-04-13T12:46:56.935-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists roles_users cascade 
+2026-04-13T12:46:56.935-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists system_local_fucking_users cascade 
+2026-04-13T12:46:56.935-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists tags cascade 
+2026-04-13T12:46:56.935-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    drop table if exists users_roles cascade 
+2026-04-13T12:46:56.943-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table order_items (
+        price float(53),
+        quantity float(53),
+        tax_value float(53),
+        item_id bigint not null,
+        order_id bigint not null,
+        user_id uuid,
+        item varchar(255),
+        primary key (item_id, order_id)
+    )
+2026-04-13T12:46:56.952-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table orders (
+        total_price float(53),
+        total_quantity float(53),
+        total_tax float(53),
+        order_id bigint not null,
+        user_id uuid not null,
+        primary key (order_id, user_id)
+    )
+2026-04-13T12:46:56.954-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table posts (
+        id uuid not null,
+        user_id uuid,
+        title varchar(60) not null,
+        content varchar(255) not null,
+        primary key (id)
+    )
+2026-04-13T12:46:56.955-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table posts_tags (
+        post_id uuid not null,
+        tag_id uuid not null,
+        primary key (post_id, tag_id)
+    )
+2026-04-13T12:46:56.957-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table profile (
+        id uuid not null,
+        user_id uuid unique,
+        bio varchar(255),
+        profile_image_url varchar(255),
+        primary key (id)
+    )
+2026-04-13T12:46:56.960-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table roles (
+        name varchar(15) unique,
+        id uuid not null,
+        primary key (id)
+    )
+2026-04-13T12:46:56.961-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table roles_users (
+        role_id uuid not null,
+        users_id uuid not null,
+        primary key (role_id, users_id)
+    )
+2026-04-13T12:46:56.964-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table system_local_fucking_users (
+        id uuid not null,
+        password varchar(20) not null,
+        email varchar(100) not null,
+        name varchar(100) not null,
+        primary key (id)
+    )
+2026-04-13T12:46:56.966-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table tags (
+        name varchar(15),
+        id uuid not null,
+        primary key (id)
+    )
+2026-04-13T12:46:56.968-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    create table users_roles (
+        role_id uuid not null,
+        user_id uuid not null,
+        primary key (role_id, user_id)
+    )
+2026-04-13T12:46:56.969-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists order_items 
+       add constraint FK2b94xo5ioyg2v8o045ndlatrt 
+       foreign key (order_id, user_id) 
+       references orders
+2026-04-13T12:46:56.984-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists orders 
+       add constraint FKiekvuv2otsk2enahpb38qf9xn 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:46:56.986-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists posts 
+       add constraint FKnujw3hsbjyk16e9l8g65tu6ag 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:46:56.987-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists posts_tags 
+       add constraint FK4svsmj4juqu2l8yaw6whr1v4v 
+       foreign key (tag_id) 
+       references tags
+2026-04-13T12:46:56.988-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists posts_tags 
+       add constraint FKcreclgob71ibo58gsm6l5wp6 
+       foreign key (post_id) 
+       references posts
+2026-04-13T12:46:56.990-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists profile 
+       add constraint FK6do55a471tt25qo5586mh2e90 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:46:56.991-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists roles_users 
+       add constraint FK9gk3kffj4seg78vxrn1h1cytb 
+       foreign key (users_id) 
+       references system_local_fucking_users
+2026-04-13T12:46:56.992-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists roles_users 
+       add constraint FKsmos02hm32191ogexm2ljik9x 
+       foreign key (role_id) 
+       references roles
+2026-04-13T12:46:56.993-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists users_roles 
+       add constraint FKj6m8fwv7oqv74fcehir1a9ffy 
+       foreign key (role_id) 
+       references roles
+2026-04-13T12:46:56.995-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    alter table if exists users_roles 
+       add constraint FKr34i0at22tsu3klgjvl8qxpms 
+       foreign key (user_id) 
+       references system_local_fucking_users
+2026-04-13T12:46:56.999-03:00  INFO 19732 --- [blog] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-13T12:46:57.155-03:00  INFO 19732 --- [blog] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-13T12:46:57.357-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.partialUpdate' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.361-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchById' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.361-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.findByUser' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.361-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll' with attribute: PROPAGATION_NOT_SUPPORTED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.361-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.update' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.362-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.create' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.362-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.delete' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.362-03:00 TRACE 19732 --- [blog] [restartedMain] t.a.AnnotationTransactionAttributeSource : Adding transactional method 'br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.delete' with attribute: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2026-04-13T12:46:57.434-03:00  WARN 19732 --- [blog] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-13T12:46:58.434-03:00  INFO 19732 --- [blog] [restartedMain] o.s.b.h.a.H2ConsoleAutoConfiguration     : H2 console available at '/console'. Database available at 'jdbc:h2:mem:blogdb'
+2026-04-13T12:46:58.504-03:00  INFO 19732 --- [blog] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-13T12:46:58.505-03:00  INFO 19732 --- [blog] [restartedMain] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-13T12:46:58.507-03:00  INFO 19732 --- [blog] [restartedMain] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-13T12:46:58.508-03:00  INFO 19732 --- [blog] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-04-13T12:46:58.514-03:00  INFO 19732 --- [blog] [restartedMain] b.c.f.j.blog.backend.BackendApplication  : Started BackendApplication in 6.843 seconds (process running for 7.822)
+2026-04-13T12:46:58.535-03:00 TRACE 19732 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:46:58.582-03:00 TRACE 19732 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:46:58.642-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        system_local_fucking_users
+        (email, name, password, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:46:58.674-03:00 TRACE 19732 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:46:58.675-03:00 TRACE 19732 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]
+2026-04-13T12:46:58.676-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        system_local_fucking_users
+        (email, name, password, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:46:58.677-03:00 TRACE 19732 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll]
+2026-04-13T12:46:58.680-03:00 TRACE 19732 --- [blog] [restartedMain] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll]
+2026-04-13T12:46:58.681-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        profile
+        (bio, profile_image_url, user_id, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:46:58.682-03:00 DEBUG 19732 --- [blog] [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        profile
+        (bio, profile_image_url, user_id, id) 
+    values
+        (?, ?, ?, ?)
+2026-04-13T12:47:04.430-03:00 TRACE 19732 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Getting transaction for [br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll]
+2026-04-13T12:47:04.432-03:00 TRACE 19732 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Getting transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]
+2026-04-13T12:47:04.502-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.bio,
+        p1_0.profile_image_url,
+        p1_0.user_id 
+    from
+        profile p1_0
+2026-04-13T12:47:04.538-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password 
+    from
+        system_local_fucking_users u1_0 
+    where
+        u1_0.id=?
+2026-04-13T12:47:04.552-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password 
+    from
+        system_local_fucking_users u1_0 
+    where
+        u1_0.id=?
+2026-04-13T12:47:04.554-03:00 TRACE 19732 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]
+2026-04-13T12:47:04.554-03:00 TRACE 19732 --- [blog] [http-nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Completing transaction for [br.com.fiap.javaadv.blog.backend.services.ProfileServiceImp.fetchAll]
+2026-04-13T12:47:04.649-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.user_id,
+        p1_0.id,
+        p1_0.content,
+        p1_0.title 
+    from
+        posts p1_0 
+    where
+        p1_0.user_id=?
+2026-04-13T12:47:04.655-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        users_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-04-13T12:47:04.658-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.user_id,
+        p1_0.id,
+        p1_0.content,
+        p1_0.title 
+    from
+        posts p1_0 
+    where
+        p1_0.user_id=?
+2026-04-13T12:47:04.659-03:00 DEBUG 19732 --- [blog] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        users_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-04-13T12:49:56.551-03:00  INFO 19732 --- [blog] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-13T12:49:56.557-03:00  INFO 19732 --- [blog] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-13T12:49:56.561-03:00  INFO 19732 --- [blog] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-13T12:49:56.563-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists order_items cascade 
+2026-04-13T12:49:56.564-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2026-04-13T12:49:56.565-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists posts cascade 
+2026-04-13T12:49:56.565-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists posts_tags cascade 
+2026-04-13T12:49:56.566-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists profile cascade 
+2026-04-13T12:49:56.567-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists roles cascade 
+2026-04-13T12:49:56.567-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists roles_users cascade 
+2026-04-13T12:49:56.568-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists system_local_fucking_users cascade 
+2026-04-13T12:49:56.568-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists tags cascade 
+2026-04-13T12:49:56.568-03:00 DEBUG 19732 --- [blog] [SpringApplicationShutdownHook] org.hibernate.SQL                        : 
+    drop table if exists users_roles cascade 
+2026-04-13T12:49:56.574-03:00  WARN 19732 --- [blog] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-240]
+2026-04-13T12:49:56.574-03:00  INFO 19732 --- [blog] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Shutdown initiated...
+2026-04-13T12:49:56.575-03:00  INFO 19732 --- [blog] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : blogHikariConnectionPool - Shutdown completed.
