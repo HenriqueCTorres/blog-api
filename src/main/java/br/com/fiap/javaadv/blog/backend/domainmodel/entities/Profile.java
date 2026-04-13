@@ -6,11 +6,13 @@ import lombok.*;
 import java.util.Objects;
 import java.util.UUID;
 
+
 @Entity
 @Table(name="PROFILE")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class Profile {
 
     @Id
@@ -24,7 +26,7 @@ public class Profile {
     private @Getter @Setter String imagePath;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn( name = "user_id")
     private @Getter @Setter User user;
 
     @Override
@@ -36,6 +38,6 @@ public class Profile {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
 }

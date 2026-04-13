@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+
 @Entity
 @Table(name = "ROLES")
 @NoArgsConstructor
@@ -21,8 +22,9 @@ public class Role {
     @Column(name = "NAME", length = 15, unique = true)
     private @Getter @Setter String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private @Getter @Setter Set<User> users;
+    @ManyToMany
+    private Set<User> users;
+
 
     @Override
     public boolean equals(Object o) {
@@ -36,3 +38,4 @@ public class Role {
         return Objects.hashCode(id);
     }
 }
+

@@ -1,11 +1,7 @@
 package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,27 +12,28 @@ import java.util.UUID;
 @Table(name="POSTS")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private @Getter @Setter UUID id;
 
-    @Column( name = "Title", nullable = false, length = 60 )
+    @Column( name = "TITLE", nullable = false, length = 60 )
     private @Getter @Setter String title;
 
     @Column( name = "Content", nullable = false, length = 255 )
     private @Getter @Setter String content;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name= "user_id")
     private @Getter @Setter User user;
 
     @ManyToMany
     @JoinTable(
-            name="POSTS_TAGS",
-            joinColumns =  @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
+        name="POSTS_TAGS",
+            joinColumns = @JoinColumn(name="post_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id")
     )
     private @Getter @Setter Set<Tag> tags = new HashSet<>();
 
@@ -51,4 +48,5 @@ public class Post {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

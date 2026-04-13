@@ -1,9 +1,9 @@
 spring:
   application:
-    name: backend
+    name: blog
 
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:blogdb
     driver-class-name: org.h2.Driver
     username: sa
     password: ""
@@ -13,8 +13,8 @@ spring:
       minimum-idle: 5
       idle-timeout: 300000
       max-lifetime: 900000
-      pool-name: SpringBootHikariCP
-      auto-commit: true # NAO SE FAZ ESSA LAMA ABAIXO EM PRODUCAO
+      pool-name: blogHikariConnectionPool
+#      auto-commit: true # NAO SE FAZ ESSA LAMA ABAIXO EM PRODUCAO
 
   sql:
     init:
@@ -103,9 +103,10 @@ logging:
         transaction: TRACE
     br:
       com:
-        empresa:
-          springCrud:
-            AppExample: DEBUG
+        fiap:
+          javaadv:
+            blog:
+            backend: DEBUG
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"

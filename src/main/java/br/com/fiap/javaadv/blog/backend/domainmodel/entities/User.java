@@ -10,46 +10,49 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+
 @Entity
 @Table(name="SYSTEM_LOCAL_FUCKING_USERS")
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
+@Builder
+public class User extends Object{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private @Getter @Setter UUID id;
 
-    @NotBlank(message = "O nome é obrigatório")
+    @NotBlank(message= "O nome é obrigatorio")
     @Size(max=100, message="Name must have 100 chars")
     @Column(name="NAME", length = 100, nullable = false)
     private @Getter @Setter String name;
 
-    @NotBlank(message = "O email é obrigatório")
-    @Email(message = "O email deve ser válido")
-    @Size(max = 100, message = "O email deve ter no máximo 100 caracteres")
-    @Column(name = "EMAIL", length = 100, nullable = false)
+    @NotBlank( message = "O email é Obrigatorio")
+    @Email(message="O email deve ser válido")
+    @Size(max = 100, message="O email deve ter no máximo 100 caracteres")
+    @Column(name="EMAIL", length = 100, nullable = false)
     private @Getter @Setter String email;
 
-    @NotBlank(message = "O password é obrigatório")
-    @Size(min = 6, message = "O password deve ter ao menos 6 posições")
+    @NotBlank(message="O password é obrigatorio")
+    @Size( min=6, message="O password deve tger ao menos 6 posicoes.")
     @Column( name = "PASSWORD", length = 20, nullable = false)
     private @Getter @Setter String password;
 
     @OneToOne( mappedBy = "user", cascade = CascadeType.ALL)
     private @Getter @Setter Profile profile;
 
-    @OneToMany( mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private @Getter @Setter Set<Post> posts;
 
     @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(
-            name = "USER_ROLES",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "USERS_ROLES",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id")
     )
     private @Getter @Setter Set<Role> roles;
+
 
     @Override
     public boolean equals(Object o) {

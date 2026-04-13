@@ -1,4 +1,4 @@
-﻿package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
+package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ORDER_ITEMS")
+@Table(name="ORDER_ITEMS")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -15,17 +15,18 @@ public class OrderItem {
     @EmbeddedId
     private @Getter @Setter OrderItemKey key;
 
-    private @Getter @Setter String item;
-    private @Getter @Setter Double quantity;
-    private @Getter @Setter Double price;
-    private @Getter @Setter Double taxValue;
+    private @Getter  @Setter String item;
+    private @Getter  @Setter Double quantity;
+    private @Getter  @Setter Double price;
+    private @Getter  @Setter Double taxValue;
+
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false),
-            @JoinColumn(name = "order_id", referencedColumnName = "order_id", insertable = false, updatable = false)
+        @JoinColumn( name= "user_id", referencedColumnName = "user_id", insertable = false, updatable = false),
+        @JoinColumn( name= "order_id", referencedColumnName = "order_id", insertable = false, updatable = false)
     })
-    private @Getter @Setter Order order;
+    private @Getter  @Setter Order order;
 
     @Override
     public boolean equals(Object o) {

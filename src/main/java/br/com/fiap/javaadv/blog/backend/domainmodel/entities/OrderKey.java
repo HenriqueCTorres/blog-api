@@ -1,4 +1,4 @@
-﻿package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
+package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,10 +13,10 @@ import java.util.UUID;
 @ToString
 public class OrderKey {
 
-    @Column(name="USER_ID")
+    @Column(name = "USER_ID")
     private @Getter @Setter UUID userId;
 
-    @Column(name="ORDER_ID")
+    @Column(name = "ORDER_ID")
     private @Getter @Setter Long orderId;
 
     @Override

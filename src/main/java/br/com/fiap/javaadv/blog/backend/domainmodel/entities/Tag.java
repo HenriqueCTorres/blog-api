@@ -1,6 +1,5 @@
 package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 

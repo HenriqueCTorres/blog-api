@@ -1,4 +1,4 @@
 package br.com.fiap.javaadv.blog.backend.datasource.repositories;
 
-public interface OrderRepositoryCustom {
+public interface OrderItemRepositoryCustom {
 }

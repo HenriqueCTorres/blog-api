@@ -1,4 +1,4 @@
-﻿package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
+package br.com.fiap.javaadv.blog.backend.domainmodel.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -12,10 +12,10 @@ import java.util.Objects;
 @ToString
 public class OrderItemKey {
 
-    @Column(name="ORDER_ID")
+    @Column(name = "ORDER_ID")
     private @Getter @Setter Long orderId;
 
-    @Column(name="ITEM_ID")
+    @Column(name = "ITEM_ID")
     private @Getter @Setter Long itemId;
 
     @Override
